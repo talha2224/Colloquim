@@ -21,7 +21,7 @@ const ExplorePage = () => {
     <div className='w-[100%]'>
       <Filters />
 
-      <div className='flex justify-between items-start mt-4 flex-wrap overflow-y-auto'>
+      <div className='flex justify-between items-start mt-4 flex-wrap overflow-y-auto -z-50'>
 
         <div className='flex-1 mt-2'>
           <div className='flex items-center justify-between mt-3'>
@@ -110,7 +110,7 @@ const ExplorePage = () => {
       {
         planPopup && (
 
-          <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50'>
+          <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50 z-50'>
             <div className='w-[50%] p-4 rounded-md bg-[#1d1d1f]'>
               <PlanPopup setregisterPopup={setplanPopup} setPayment={setPayment} />
             </div>
@@ -121,7 +121,7 @@ const ExplorePage = () => {
       {
         payment && (
 
-          <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50'>
+          <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50 z-50'>
             <div className='w-[30%] p-4 rounded-md bg-[#1d1d1f]'>
               <PaymentPopup setPaymentPopup={setPayment} setConfirmation={setConfirmation} />
             </div>
@@ -132,7 +132,7 @@ const ExplorePage = () => {
       {
         confirmation && (
 
-          <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50'>
+          <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50 z-50'>
             <div className='w-[30%] p-4 rounded-md bg-[#1d1d1f]'>
               <ConfirmationPage setConfirmation={setConfirmation} />
             </div>

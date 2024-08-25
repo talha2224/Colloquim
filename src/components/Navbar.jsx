@@ -65,7 +65,7 @@ const Navbar = ({ isLogin, setShowSidebar }) => {
             {
                 registerPopup && (
 
-                    <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50'>
+                    <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50 z-50'>
                         <div className='w-[20rem] p-4 rounded-md bg-[#1d1d1f]'>
                             <RegisterPopup setregisterPopup={setregisterPopup} />
                         </div>
@@ -77,7 +77,7 @@ const Navbar = ({ isLogin, setShowSidebar }) => {
             {
                 loginPopp && (
 
-                    <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50'>
+                    <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50 z-50'>
                         <div className='w-[20rem] p-4 rounded-md bg-[#1d1d1f]'>
                             <LoginPopup setregisterPopup={setloginPopp} />
                         </div>
