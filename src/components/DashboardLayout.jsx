@@ -19,7 +19,7 @@ const DashboardLayout = ({ isLogin, setShowSidebar, showSidebar }) => {
 
             <div key={i.id} className='flex items-center -[100%] h-[2.2rem] mb-[1rem]'>
               <div className={`w-[2px] h-[1rem] rounded-md ${i.link.includes(location) && "bg-[#E83144]"}`}></div>
-              <Link to={i.link} className={`flex-1 ${i.id == 5 && "border border-[#262626]"}  ${i.link.includes(location) && "bg-[#262626]"} w-[100%] h-[100%] rounded-md px-2 flex items-center gap-x-3 cursor-pointer`}>
+              <Link to={i.link} className={`flex-1 ${i.id == 5 && "border border-[#262626]"}  ${location.includes(i.link.includes) && "bg-[#262626]"} w-[100%] h-[100%] rounded-md px-2 flex items-center gap-x-3 cursor-pointer`}>
                 <span className=' text-sm'>{i.icon}</span>
                 <p>{i.name}</p>
               </Link>
@@ -74,7 +74,7 @@ const DashboardLayout = ({ isLogin, setShowSidebar, showSidebar }) => {
       {
         showSidebar && (
           <div className='min-w-[15rem] fixed top-0 left-0 bg-[black] h-[100%] max-w-[15rem] border-r border-[#262626] p-3 overflow-y-auto md:hidden block'>
-            <ImCross onClick={()=>setShowSidebar(false)} className=' float-right '/>
+            <ImCross onClick={() => setShowSidebar(false)} className=' float-right ' />
             {
               sidebar.map((i) => (
 
@@ -137,7 +137,7 @@ const DashboardLayout = ({ isLogin, setShowSidebar, showSidebar }) => {
 
 
       {/* RIGHT DYNAMIC CONTENT  */}
-      <div className='py-3 md:py-7 px-5 overflow-x-auto'>
+      <div className='py-3 md:py-7 px-5 overflow-y-auto  flex-1 h-[100%]'>
         <Outlet />
       </div>
 

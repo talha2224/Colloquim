@@ -1,20 +1,23 @@
 import React, { useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
-import { GiHamburger, GiHamburgerMenu } from 'react-icons/gi'
+import { GiHamburgerMenu } from 'react-icons/gi'
 import RegisterPopup from './popups/RegisterPopup'
+import Logo from '../assets/logo.svg'
+import LoginPopup from './popups/LoginPopup'
 
 const Navbar = ({ isLogin, setShowSidebar }) => {
     const [loginPopp, setloginPopp] = useState(false)
     const [registerPopup, setregisterPopup] = useState(false)
     return (
 
-        <div className='border-b border-[#262626] w-screen h-[17vh] md:h-fit px-5'>
+        <div className='border-b border-[#262626] w-screen h-[17vh] md:h-fit px-5 md:block flex justify-center items-center flex-col'>
 
 
-            <div className='flex justify-between items-center md:my-3 mt-3'>
+            <div className='flex justify-between items-center md:my-3 mt-3 w-[100%]'>
 
                 {/* LOGO  */}
                 <div className='flex items-center gap-x-4'>
+                    <img src={Logo} alt="" className='h-[2rem]' />
                     <h1>Colloquium</h1>
                 </div>
 
@@ -45,7 +48,7 @@ const Navbar = ({ isLogin, setShowSidebar }) => {
             </div>
 
             {/* RESPOINSIVE SERARCH BAR  */}
-            <div className=' flex md:hidden justify-start items-center gap-x-4 my-2'>
+            <div className=' flex md:hidden justify-start items-center gap-x-4 my-2 w-[100%]'>
 
                 <div onClick={() => setShowSidebar(true)} className=' flex items-center justify-center gap-x-3 bg-[#262626] h-[2rem] w-[2rem] rounded-md'>
                     <GiHamburgerMenu />
@@ -60,16 +63,27 @@ const Navbar = ({ isLogin, setShowSidebar }) => {
             {/* POPUPS  */}
 
             {
-                registerPopup&& (
+                registerPopup && (
 
                     <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50'>
-                        <div className='w-[30%] p-4 rounded-md bg-[#1d1d1f]'>
-                            <RegisterPopup setregisterPopup={setregisterPopup}/>
+                        <div className='w-[20rem] p-4 rounded-md bg-[#1d1d1f]'>
+                            <RegisterPopup setregisterPopup={setregisterPopup} />
                         </div>
                     </div>
                 )
             }
 
+
+            {
+                loginPopp && (
+
+                    <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50'>
+                        <div className='w-[20rem] p-4 rounded-md bg-[#1d1d1f]'>
+                            <LoginPopup setregisterPopup={setloginPopp} />
+                        </div>
+                    </div>
+                )
+            }
 
 
         </div>
