@@ -10,6 +10,7 @@ import MyLive from './pages/Live/MyLive'
 import Following from './pages/Following/Following'
 import Profile from './pages/Profile/Profile'
 import Subscription from './pages/Susbcription/Subscription'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
 
@@ -27,8 +28,8 @@ function App() {
 
   return (
     <>
+      <Toaster />
       <Navbar isLogin={isLogin} showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-
       <Routes>
         <Route path='/dashboard/' element={<DashboardLayout isLogin={isLogin} showSidebar={showSidebar} setShowSidebar={setShowSidebar} />}>
           <Route path='explore' element={<ExplorePage />} />

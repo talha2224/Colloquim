@@ -1,8 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ImCross } from 'react-icons/im'
 import Logo from '../../assets/logo.svg'
+import axios from 'axios'
+import baseUrl from '../../config'
+import toast from 'react-hot-toast'
 
 const LoginPopup = ({ setregisterPopup }) => {
+  const [data, setData] = useState({ name: "", password: "" })
+
+  const onChangeInput = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (data?.name.length === 0 || data?.password.length === 0) {
+      toast.error("All Fields Are Required")
+    }
+    else {
+      try {
+        let res = await axios.post(`${baseUrl}/account/login`, data)
+        if (res) {
+          console.log(res?.data?.data?._id, 'res?.data?.data?._id')
+          localStorage.setItem("userId", res?.data?.data?._id)
+          toast.success("Account Login")
+          setregisterPopup(false)
+        }
+      }
+      catch (error) {
+        console.log(error)
+        if (error.status == 403) {
+          toast.error("Invalid Credentials")
+        }
+        else if (error.status == 404) {
+          toast.error("User Not Found")
+        }
+      }
+    }
+  }
   return (
     <div>
       <div className='flex justify-between items-center'>
@@ -19,10 +54,10 @@ const LoginPopup = ({ setregisterPopup }) => {
       <p className=' text-white mt-3'>Sign in</p>
       <p className='text-sm text-[#606062] mt-1'>Login with username and  password</p>
 
-      <input type="text" className='bg-[#262626] w-[100%] mt-6 rounded-md h-[2.3rem] px-3 placeholder:text-white' placeholder='Username' />
-      <input type="text" className='bg-[#262626] w-[100%] mt-2 rounded-md h-[2.3rem] px-3 placeholder:text-white' placeholder='Password' />
+      <input onChange={(e) => onChangeInput(e)} type="text" name='name' className='bg-[#262626] w-[100%] mt-6 rounded-md h-[2.3rem] px-3 placeholder:text-white' placeholder='Username' />
+      <input onChange={(e) => onChangeInput(e)} type='password' name='password' className='bg-[#262626] w-[100%] mt-2 rounded-md h-[2.3rem] px-3 placeholder:text-white' placeholder='Password' />
 
-      <button className='mt-4 rounded-xl w-[100%] h-[2.3rem] bg-[#E83144]'>Continue</button>
+      <button onClick={handleSubmit} className='mt-4 rounded-xl w-[100%] h-[2.3rem] bg-[#E83144]'>Continue</button>
       <p className='mt-3 text-sm text-center'>Don't have an account? <span className='text-[#4055e2] cursor-pointer'>Register</span></p>
     </div>
   )

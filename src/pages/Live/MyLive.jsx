@@ -1,12 +1,61 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // import Filters from '../../components/Filters'
 import { FaUser } from 'react-icons/fa'
 import Cover from '../../assets/Video.svg'
 import Filters from '../../assets/filters.svg'
+import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import baseUrl from '../../config';
 
 
 const MyLive = () => {
   const arr = [1, 1, 1, 1, 1, 1, 1, , 1, 1]
+  const location = useLocation()
+  let id = location.search.split("=")[1].split("?")[0]
+  // console.log(id, 'roleSt')
+
+  const randomID = (len) => {
+    let result = '';
+    if (result) return result;
+    let chars = '12345qwertyuiopasdfgh67890jklmnbvcxzMVCZXASDQWERTYHGFUIOLKJP', maxPos = chars.length, i;
+    len = len || 5;
+    for (i = 0; i < len; i++) {
+      result += chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return result;
+  }
+  const roomID = id;
+  let role_str = location.search.split("=")[2];
+  const role = role_str === 'Host' ? ZegoUIKitPrebuilt.Host : role_str === 'Cohost' ? ZegoUIKitPrebuilt.Cohost : ZegoUIKitPrebuilt.Audience;
+  const appID = 531316054;
+  const serverSecret = "1c717f71f0f17d8fb37ee2ebbb1afd00";
+
+  let sharedLinks = [];
+  if (role === ZegoUIKitPrebuilt.Host || role === ZegoUIKitPrebuilt.Cohost) {
+    sharedLinks.push({
+      name: 'Join as co-host',
+      url:window.location.protocol + '//' +window.location.host + window.location.pathname +'?roomID=' +roomID +'&role=Cohost',
+    });
+  }
+  sharedLinks.push({
+    name: 'Join as audience',
+    url:window.location.protocol + '//' +window.location.host + window.location.pathname +'?roomID=' +roomID +'&role=Audience',
+  });
+
+  const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, randomID(5), randomID(5));
+
+
+  // start the call
+  let myMeeting = async (element) => {
+    const zp = ZegoUIKitPrebuilt.create(kitToken);
+    zp.joinRoom({container: element,showPreJoinView: false,scenario: {mode: ZegoUIKitPrebuilt.LiveStreaming,config: {role,},},sharedLinks,});
+    if(role_str === 'Host'){
+      let res = await axios.post(`${baseUrl}/stream/create`,{accountId:localStorage.getItem("userId"),userLink:sharedLinks[1].url,coHostLink:sharedLinks[0].url})
+      console.log(res)
+    }
+  };
+
 
   return (
     <div className='w-[100%]'>
@@ -19,7 +68,10 @@ const MyLive = () => {
           <p>Tokens earned - 0.606</p>
 
           <div className='relative w-[100%] mt-3'>
-            <img src={Cover} alt="" className='w-[100%] h-[29rem] rounded-md' />
+            {/* STREAMER PAGE VIDEO HERE REPLACE THE COVER IMAGE WITH ACTUAL VIDEO LIVE */}
+            <div className="myCallContainer" ref={myMeeting} style={{ width: '100%', height: '29rem' }}></div>
+
+            {/* <img src={Cover} alt="" className='w-[100%] h-[29rem] rounded-md' /> */}
           </div>
 
         </div>

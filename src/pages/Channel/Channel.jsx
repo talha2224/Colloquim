@@ -15,7 +15,7 @@ const Channel = () => {
           <p className='text-[#606062] text-sm'>Nemo enim ipsam voluptatem</p>
         </div>
 
-        <div onClick={() => { setcounter(true) }} className='flex cursor-pointer items-center justify-center w-[11rem] h-[2.3rem] rounded-md gap-x-2 bg-[#4055e2]'>
+        <div onClick={() => {localStorage.setItem("role","Host");setcounter(true); }} className='flex cursor-pointer items-center justify-center w-[11rem] h-[2.3rem] rounded-md gap-x-2 bg-[#4055e2]'>
           <BsBroadcast />
           <p className='text-sm'>Start broadcasting</p>
         </div>
@@ -27,7 +27,7 @@ const Channel = () => {
       </div>
 
 
-      <p className='border-b border-[#262626] text-lg mt-4 pb-2 mt-6'>My live sessions</p>
+      <p className='border-b border-[#262626] text-lg pb-2 mt-6'>My live sessions</p>
       <p className='mt-3 text-sm'>Today - 02:33 AM</p>
 
 

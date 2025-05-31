@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { sidebar } from '../constants/Sidebar'
 import { FaUser } from 'react-icons/fa'
 import { ImCross } from 'react-icons/im'
+import baseUrl from '../config'
+import axios from 'axios'
 
 const DashboardLayout = ({ isLogin, setShowSidebar, showSidebar }) => {
   const location = useLocation().pathname
-  const arr = [1, 2, 3]
+  const [data, setData] = useState([])
+  // const arr = [1, 2, 3]
+  const getLiveStream = async () => {
+    let res = await axios.get(`${baseUrl}/stream/live`)
+    setData(res?.data?.data)
+  }
+
+  useEffect(()=>{
+    getLiveStream()
+  },[])
+
 
   return (
     <div className='h-[90vh] flex items-start overflow-y-auto'>
@@ -35,7 +47,7 @@ const DashboardLayout = ({ isLogin, setShowSidebar, showSidebar }) => {
             :
             (
 
-              arr?.map((i, _inddx) => (
+              data?.map((i, _inddx) => (
                 <>
                   {
                     _inddx === 0 && (
@@ -51,13 +63,13 @@ const DashboardLayout = ({ isLogin, setShowSidebar, showSidebar }) => {
                       </div>
 
                       <div>
-                        <p className='text-xs'>@johndoe...</p>
+                        <p className='text-xs truncate'>@{i.accountId?.name}</p>
                       </div>
 
                     </div>
 
                     <div>
-                      <button className='bg-[#4055e2] w-[4rem] h-[2rem] rounded-2xl text-xs flex items-center justify-center'>Join live</button>
+                      <button onClick={()=>localStorage.setItem("streamId",i?._id)} className='bg-[#4055e2] w-[4rem] h-[2rem] rounded-2xl text-xs flex items-center justify-center'>Join live</button>
 
                     </div>
 

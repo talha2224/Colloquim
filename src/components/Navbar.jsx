@@ -33,7 +33,7 @@ const Navbar = ({ isLogin, setShowSidebar }) => {
                 {/* BUTTONS  */}
 
                 {
-                    !isLogin ?
+                    !localStorage.getItem("userId") ?
                         <div className='flex gap-x-4 items-center'>
                             <button onClick={() => { setloginPopp(true) }} className='bg-[#262626] w-[5rem] h-[2rem] rounded-2xl text-sm'>Login</button>
                             <button onClick={() => { setregisterPopup(true) }} className='bg-[#E83144] w-[5rem] h-[2rem] rounded-2xl text-sm'>Signup</button>
